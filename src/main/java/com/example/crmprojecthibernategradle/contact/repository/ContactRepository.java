@@ -1,16 +1,13 @@
-package com.example.CRMProject.contact.repository;
+package com.example.crmprojecthibernategradle.contact.repository;
 
-import com.example.CRMProject.company.model.Company;
-import com.example.CRMProject.contact.model.Contact;
-import org.springframework.data.jpa.repository.Query;
+import com.example.crmprojecthibernategradle.contact.model.Contact;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
 
+@Repository
 public interface ContactRepository {
-    // @Query("select c from Contact c")
     List<Contact> findAll();
 
 

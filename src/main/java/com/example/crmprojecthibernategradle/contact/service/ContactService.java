@@ -1,8 +1,8 @@
-package com.example.CRMProject.contact.service;
+package com.example.crmprojecthibernategradle.contact.service;
 
-import com.example.CRMProject.company.model.Company;
-import com.example.CRMProject.contact.model.Contact;
-import com.example.CRMProject.contact.repository.ContactRepository;
+import com.example.crmprojecthibernategradle.company.model.Company;
+import com.example.crmprojecthibernategradle.contact.model.Contact;
+import com.example.crmprojecthibernategradle.contact.repository.ContactRepository;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

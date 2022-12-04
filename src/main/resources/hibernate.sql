@@ -24,7 +24,6 @@ create table Contact
     creation     timestamp default now(),
     update       timestamp default now()
 );
-drop table Contact, Company,Task;
 
 create table Task
 (
@@ -37,3 +36,5 @@ create table Task
     creation     timestamp default now(),
     update       timestamp default now()
 );
+
+drop table Contact, Company,Task;
