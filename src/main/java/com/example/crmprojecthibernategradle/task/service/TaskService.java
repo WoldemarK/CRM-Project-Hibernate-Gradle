@@ -1,4 +1,4 @@
-//package com.example.CRMProject.task.service;
+package com.example.crmprojecthibernategradle.task.service;//package com.example.CRMProject.task.service;
 //
 //
 //import com.example.CRMProject.company.model.Company;

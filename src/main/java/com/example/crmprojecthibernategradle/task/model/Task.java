@@ -1,7 +1,7 @@
-package com.example.CRMProject.task.model;
+package com.example.crmprojecthibernategradle.task.model;
 
-import com.example.CRMProject.company.model.Company;
-import com.example.CRMProject.contact.model.Contact;
+import com.example.crmprojecthibernategradle.company.model.Company;
+import com.example.crmprojecthibernategradle.contact.model.Contact;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;

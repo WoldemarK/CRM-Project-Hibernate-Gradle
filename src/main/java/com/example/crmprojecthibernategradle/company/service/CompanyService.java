@@ -1,19 +1,19 @@
-package com.example.CRMProject.company.service;
+package com.example.crmprojecthibernategradle.company.service;
 
-import com.example.CRMProject.company.model.Company;
-import com.example.CRMProject.company.repository.CompanyRepository;
+
+import com.example.crmprojecthibernategradle.company.model.Company;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CompanyService implements CompanyRepository {
-
+public class CompanyService {
     private final SessionFactory sessionFactory;
 
 
@@ -34,7 +34,7 @@ public class CompanyService implements CompanyRepository {
     @Transactional(readOnly = true)
     public Company findById(Long id) {
         Session session = sessionFactory.getCurrentSession();
-        return session.get(Company.class,id);
+        return session.get(Company.class, id);
     }
 
     /**
@@ -44,7 +44,7 @@ public class CompanyService implements CompanyRepository {
     @Transactional
     public Company save(Company company) {
         Session session = sessionFactory.getCurrentSession();
-        session.save(company);
+        session.persist(company);
         return company;
     }
 
@@ -60,25 +60,28 @@ public class CompanyService implements CompanyRepository {
     /**
      * @param id
      */
-
+    @Transactional
     public void delete(Long id) {
-
+        Session session = sessionFactory.getCurrentSession();
+        session.remove(session.get(Company.class, id));
     }
 
     /**
      * @param name
      */
-
-    public void findByName(String name) {
-
+    @Transactional(readOnly = true)
+    public List<Company> findByName(String name) {
+        Session session = sessionFactory.getCurrentSession();
+        return  session.createQuery("select c from Contact c where c.name = :name", Company.class).getResultList();
     }
 
     /**
      * @param phoneNumber
      */
-
-    public void findByPhoneNumber(String phoneNumber) {
-
+    @Transactional(readOnly = true)
+    public Company findByPhoneNumber(String phoneNumber) {
+        Session session = sessionFactory.getCurrentSession();
+       return session.get(Company.class, phoneNumber);
     }
 
     /**
