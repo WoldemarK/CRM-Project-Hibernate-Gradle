@@ -1,5 +1,6 @@
-package com.example.CRMProject.task.repository;
-import com.example.CRMProject.task.model.Task;
+package com.example.crmprojecthibernategradle.task.repository;
+
+import com.example.crmprojecthibernategradle.task.model.Task;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.example.CRMProject.contact.exception;
+package com.example.crmprojecthibernategradle.contact.exception;
 
 public class ContactException extends RuntimeException{
 

@@ -1,12 +1,9 @@
-package com.example.CRMProject.contact.controller;
+package com.example.crmprojecthibernategradle.contact.controller;
 
-import com.example.CRMProject.company.model.Company;
-import com.example.CRMProject.contact.model.Contact;
-import com.example.CRMProject.contact.service.ContactService;
-import jakarta.validation.Valid;
+import com.example.crmprojecthibernategradle.contact.model.Contact;
+import com.example.crmprojecthibernategradle.contact.service.ContactService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

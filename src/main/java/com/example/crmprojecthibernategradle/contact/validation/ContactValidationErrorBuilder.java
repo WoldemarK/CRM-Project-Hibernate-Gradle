@@ -1,4 +1,4 @@
-package com.example.CRMProject.contact.validation;
+package com.example.crmprojecthibernategradle.contact.validation;
 
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;

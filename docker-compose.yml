@@ -4,7 +4,7 @@ services:
 
   postgres:
     image: postgres:alpine
-    container_name: CRM-Project-HibernateApp
+    container_name: CRM-Project-Hibernate-Gradle
     restart: always
     hostname: postgres
     ports:
