@@ -1,7 +1,7 @@
 package com.example.crmprojecthibernategradle.company.controller;
 
 
-import com.example.crmprojecthibernategradle.company.controller.exception.CompanyException;
+import com.example.crmprojecthibernategradle.company.exception.CompanyException;
 import com.example.crmprojecthibernategradle.company.model.Company;
 import com.example.crmprojecthibernategradle.company.service.CompanyService;
 import jakarta.validation.Valid;

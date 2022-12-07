@@ -1,4 +1,4 @@
-package com.example.crmprojecthibernategradle.company.controller.exception;
+package com.example.crmprojecthibernategradle.company.exception;
 
 public class CompanyException extends RuntimeException{
 
