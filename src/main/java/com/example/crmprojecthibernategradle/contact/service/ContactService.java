@@ -29,12 +29,6 @@ public class ContactService implements ContactRepository {
         return session.createQuery("select c from Contact c", Contact.class).getResultList();
     }
 
-    /**
-     * Поиск контакта по ID
-     *
-     * @param id
-     * @return
-     */
     @Override
     @Transactional(readOnly = true)
     public Contact findById(Long id) {
@@ -42,11 +36,6 @@ public class ContactService implements ContactRepository {
         return session.get(Contact.class, id);
     }
 
-    /**
-     * Сохранение контакта
-     *
-     * @param contact
-     */
     @Override
     @Transactional()
     public Contact save(Contact contact) {
@@ -55,12 +44,6 @@ public class ContactService implements ContactRepository {
         return contact;
     }
 
-    /**
-     * Обновление контакта
-     *
-     * @param id
-     * @param updatedContact
-     */
     @Override
     @Transactional(readOnly = true)
     public void update(Long id, Contact updatedContact) {
@@ -76,11 +59,6 @@ public class ContactService implements ContactRepository {
 
     }
 
-    /**
-     * Удаление Контакта
-     *
-     * @param id
-     */
     @Override
     @Transactional(readOnly = true)
     public void delete(Long id) {
@@ -90,11 +68,6 @@ public class ContactService implements ContactRepository {
 
     }
 
-    /**
-     * Поиск контакта по имени
-     *
-     * @param name
-     */
     @Override
     @Transactional(readOnly = true)
     public void findByName(String name) {
@@ -114,12 +87,6 @@ public class ContactService implements ContactRepository {
         session.createQuery("select  c from Contact c where c.phoneNumber=phoneNumber", Contact.class);
     }
 
-    /**
-     * Поиск контакта по первым символом
-     *
-     * @param name
-     * @return
-     */
     @Override
     @Transactional(readOnly = true)
     public List<Contact> findByNameFirst(String name) {
@@ -127,11 +94,7 @@ public class ContactService implements ContactRepository {
         return session.createQuery("select c from Contact c where c.name like 'T%'", Contact.class).getResultList();
     }
 
-    /**
-     * Поиск контактов по компании
-     *
-     * @param company
-     */
+
    // @Override
     @Transactional(readOnly = true)
     public List<Contact> findByNameCompany(List<Company> company) {
