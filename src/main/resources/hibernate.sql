@@ -39,3 +39,4 @@ create table Task
 
 drop table Contact, Company,Task;
 drop table Company;
+drop table Contact;

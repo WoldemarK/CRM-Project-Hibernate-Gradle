@@ -6,21 +6,20 @@ import com.example.crmprojecthibernategradle.company.model.Company;
 import com.example.crmprojecthibernategradle.company.service.CompanyService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
+@Slf4j
 @RestController
 @RequestMapping("/company")
 @RequiredArgsConstructor
 public class CompanyController {
     private final CompanyService service;
-    private static final Logger logger = LoggerFactory.getLogger(CompanyController.class);
+
 
     @GetMapping("/all")
     public ResponseEntity<Optional<List<Company>>> getAll() {
@@ -35,11 +34,9 @@ public class CompanyController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Company>> getId(@Valid @PathVariable(name = "id") Long id) {
-        logger.info("Providing the company with " + id);
-
+    public ResponseEntity<Optional<Company>> findById(@Valid @PathVariable(name = "id") Long id) {
         return ResponseEntity.ok(Optional.ofNullable(service.findById(id)
-                .orElseThrow(() -> new CompanyException("The requested company does not exist"))));
+                .orElseThrow(() -> new CompanyException("The requested company does not exist" + id))));
 
     }
 
@@ -57,7 +54,6 @@ public class CompanyController {
 
     @GetMapping("/name")
     public ResponseEntity<Company> findByName(@Valid @RequestParam(name = "name") String name) {
-
         return ResponseEntity.ok(service.findByName(name));
     }
 

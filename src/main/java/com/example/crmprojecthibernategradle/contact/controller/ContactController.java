@@ -1,60 +1,65 @@
 package com.example.crmprojecthibernategradle.contact.controller;
 
+import com.example.crmprojecthibernategradle.company.exception.CompanyException;
+import com.example.crmprojecthibernategradle.contact.exception.ContactException;
 import com.example.crmprojecthibernategradle.contact.model.Contact;
 import com.example.crmprojecthibernategradle.contact.service.ContactService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/contact")
 @RequiredArgsConstructor
 public class ContactController {
     private final ContactService service;
+
     @GetMapping("/all")
-    public ResponseEntity<List<Contact>> getAllContacts() {
+    public ResponseEntity<Optional<List<Contact>>> getAllContacts() {
         return ResponseEntity.ok(service.findAll());
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<Contact> getId(@Valid @PathVariable(name = "id") Long id) {
-//        return ResponseEntity.ok(service.findById(id));
-//    }
-
-    @PostMapping
+    @PostMapping("/save")
     public ResponseEntity<Contact> save(@RequestBody Contact contacts) {
-        return ResponseEntity.ok(service.save(contacts));
+        return ResponseEntity.ok(service.save(contacts)
+                .orElseThrow(() -> new ContactException("An error occurred while saving, check the spelling of the input")));
     }
 
-//    @PatchMapping("/{id}/contact")
-//    public void update(@Valid @PathVariable(name = "id") Long id, @RequestBody Contact contact) {
-//        service.update(id, contact);
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    public void delete(@PathVariable(name = "id") Long id) {
-//        service.delete(id);
-//    }
-//
-//    @GetMapping("/name")
-//    public void getName(@RequestParam(name = "name") String name) {
-//        service.findByName(name);
-//    }
-//
-//    @GetMapping("/phoneNumber")
-//    public void getPhone(@RequestParam(name = "phoneNumber") String phoneNumber) {
-//        service.findByName(phoneNumber);
-//    }
-//
-//    @GetMapping("/firstName")
-//    public ResponseEntity<List<Contact>> first(@Valid @RequestParam(name = "firstName") String firstName) {
-//        return ResponseEntity.ok(service.findByNameFirst(firstName));
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<Contact>> getId(@Valid @PathVariable(name = "id") Long id) {
+        return ResponseEntity.ok(Optional.ofNullable(service.findById(id)
+                .orElseThrow(() -> new ContactException("The requested contact does not exist" + id))));
     }
-//    @GetMapping("/findBy")
-//    public ResponseEntity<List<Company>>  findByNameCompany(@RequestParam(name = " findByN") List<Company> findBy){
-//
-//        return service.findByNameCompany(findBy);
-//    }
+
+    @PutMapping("/{id}/contact")
+    public ResponseEntity<Optional<Contact>> update(@Valid @PathVariable(name = "id") Long id,
+                                                    @RequestParam(name = "contact") Contact contact) {
+        return ResponseEntity.ok(Optional.ofNullable(service.update(id, contact)
+                .orElseThrow(() -> new CompanyException("Failed to save contact"))));
+    }
+    @DeleteMapping("/delete/{id}")
+    public void delete(@PathVariable(name = "id") Long id) {
+        service.delete(id);
+    }
+    @GetMapping("/name")
+    public ResponseEntity<Contact> findByName(@Valid @RequestParam(name = "name") String name) {
+        return ResponseEntity.ok(service.findByName(name));
+    }
+
+    @GetMapping("/phone")
+    public ResponseEntity<Contact> findByPhoneNumber(@Valid @RequestParam(name = "phone") String phone) {
+        return ResponseEntity.ok(service.findByPhoneNumber(phone));
+    }
+
+    @GetMapping("/names")
+    public ResponseEntity<List<Contact>> findAContactByFirstBacks(@Valid @RequestParam(name = "name") String name) {
+        return ResponseEntity.ok(Collections.singletonList((Contact) service.findByNameFirst(name)
+                .orElseThrow(() -> new ContactException("The requested contact does not exist"))));
+    }
+}
 

@@ -2,7 +2,6 @@ package com.example.crmprojecthibernategradle.contact.service;
 
 import com.example.crmprojecthibernategradle.company.model.Company;
 import com.example.crmprojecthibernategradle.contact.model.Contact;
-import com.example.crmprojecthibernategradle.contact.repository.ContactRepository;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,43 +9,37 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class ContactService implements ContactRepository {
+public class ContactService {
     private final SessionFactory sessionFactory;
 
 
-    /**
-     * Показать все контакты
-     *
-     * @return
-     */
-    @Override
     @Transactional(readOnly = true)
-    public List<Contact> findAll() {
+    public Optional<List<Contact>> findAll() {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("select c from Contact c", Contact.class).getResultList();
+        return Optional.of(session.createQuery("select c from Contact  c", Contact.class).getResultList());
     }
 
-    @Override
+
     @Transactional(readOnly = true)
-    public Contact findById(Long id) {
+    public Optional<Contact> findById(Long id) {
         Session session = sessionFactory.getCurrentSession();
-        return session.get(Contact.class, id);
+        return Optional.ofNullable(session.get(Contact.class, id));
     }
 
-    @Override
+
     @Transactional()
-    public Contact save(Contact contact) {
-        Session session = sessionFactory.getCurrentSession();
-        session.persist(contact);
-        return contact;
+    public Optional<Contact> save(Contact contact) {
+        sessionFactory.getCurrentSession().saveOrUpdate(contact);
+        return Optional.of(contact);
     }
 
-    @Override
+
     @Transactional(readOnly = true)
-    public void update(Long id, Contact updatedContact) {
+    public Optional<Contact> update(Long id, Contact updatedContact) {
         Session session = sessionFactory.getCurrentSession();
 
         Contact contact = session.get(Contact.class, id);
@@ -55,47 +48,59 @@ public class ContactService implements ContactRepository {
         contact.setEmail(updatedContact.getEmail());
         contact.setPhoneNumber(updatedContact.getPhoneNumber());
         contact.setDescriptions(updatedContact.getDescriptions());
+        contact.setPost(updatedContact.getPost());
 
+        contact.setCreation(updatedContact.getCreation());
+        contact.setUpdate(updatedContact.getUpdate());
 
+        /**
+         * company, task
+         */
+        return Optional.of(contact);
     }
 
-    @Override
+
     @Transactional(readOnly = true)
     public void delete(Long id) {
         Session session = sessionFactory.getCurrentSession();
         session.remove(session.get(Contact.class, id));
-        System.out.println("Контакт с ID: " + id + " уделен");
 
     }
 
-    @Override
     @Transactional(readOnly = true)
-    public void findByName(String name) {
+    public Contact findByName(String name) {
         Session session = sessionFactory.getCurrentSession();
-        session.createQuery("select  c from Contact c where c.name=name", Contact.class);
+        return (Contact) session.createQuery("select c from Contact c where c.name =name", Contact.class);
     }
-
-    /**
-     * Поиск контакта по номеру телефона
-     *
-     * @param phoneNumber
-     */
-    @Override
     @Transactional(readOnly = true)
-    public void findByPhoneNumber(String phoneNumber) {
+    public List<Contact> findByNames(List<Contact> contacts) {
         Session session = sessionFactory.getCurrentSession();
-        session.createQuery("select  c from Contact c where c.phoneNumber=phoneNumber", Contact.class);
+        List<String> searchByName = contacts
+                .stream()
+                .map(Contact::getName)
+                .toList();
+        return session.createQuery("select c from Contact c where c.name in :searchByName", Contact.class)
+                .setParameter("searchByName", searchByName).getResultList();
     }
 
-    @Override
+
     @Transactional(readOnly = true)
-    public List<Contact> findByNameFirst(String name) {
+    public Contact findByPhoneNumber(String phoneNumber) {
         Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("select c from Contact c where c.name like 'T%'", Contact.class).getResultList();
+       return session.get(Contact.class, phoneNumber);
     }
 
 
-   // @Override
+    @Transactional(readOnly = true)
+    public Optional<List<Contact>> findByNameFirst(String name) {
+        Session session = sessionFactory.getCurrentSession();
+        return Optional
+                .ofNullable(session.createQuery("select c from Contact c where c.name like 'T%'", Contact.class)
+                        .getResultList());
+
+    }
+
+
     @Transactional(readOnly = true)
     public List<Contact> findByNameCompany(List<Company> company) {
         Session session = sessionFactory.getCurrentSession();

@@ -1,13 +1,18 @@
 package com.example.crmprojecthibernategradle.company.model;
 
 
+import com.example.crmprojecthibernategradle.contact.model.Contact;
+import com.example.crmprojecthibernategradle.task.model.Task;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 
 import jakarta.validation.constraints.Size;
+import org.hibernate.annotations.Cascade;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Company")
@@ -40,28 +45,43 @@ public class Company  {
     private String website;
     @Column(name = "inn")
     private Long INN;
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
-//    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-//    private List<Contact> contacts;
-//
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
-//    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
-//    private List<Task>task;
-//
-//    public void addContact(Contact c) {
-//        if (contacts == null)
-//            this.contacts = new ArrayList<>();
-//        this.contacts.add(c);
-//        c.setCompany(this);
-//    }
-//    public void addTask(Task t) {
-//        if (task == null)
-//            this.task = new ArrayList<>();
-//        this.task.add(t);
-//        t.setCompany(this);
-//    }
-//
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    private List<Contact> contacts;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "company")
+    @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    private List<Task>task;
+
+    public void addContact(Contact c) {
+        if (contacts == null)
+            this.contacts = new ArrayList<>();
+        this.contacts.add(c);
+        c.setCompany(this);
+    }
+    public void addTask(Task t) {
+        if (task == null)
+            this.task = new ArrayList<>();
+        this.task.add(t);
+        t.setCompany(this);
+    }
+
+
+    public List<Contact> getContacts() {
+        return contacts;
+    }
+
+    public void setContacts(List<Contact> contacts) {
+        this.contacts = contacts;
+    }
+
+    public List<Task> getTask() {
+        return task;
+    }
+
+    public void setTask(List<Task> task) {
+        this.task = task;
+    }
     @Column(name = "creation")
     private LocalDateTime creation;
 
@@ -152,22 +172,6 @@ public class Company  {
     public void setINN(Long INN) {
         this.INN = INN;
     }
-
-//    public List<Contact> getContacts() {
-//        return contacts;
-//    }
-//
-//    public void setContacts(List<Contact> contacts) {
-//        this.contacts = contacts;
-//    }
-//
-//    public List<Task> getTask() {
-//        return task;
-//    }
-//
-//    public void setTask(List<Task> task) {
-//        this.task = task;
-//    }
 
     public LocalDateTime getCreation() {
         return creation;
