@@ -1,7 +1,7 @@
 package com.example.crmprojecthibernategradle.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -14,17 +14,12 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan("com.example.crmprojecthibernategradle")
+@RequiredArgsConstructor
 @PropertySource("classpath:hibernate.properties")
+@ComponentScan("com.example.crmprojecthibernategradle")
 public class ConfigDataSource {
-    private final ApplicationContext applicationContext;
-    private final Environment env;
 
-    @Autowired
-    public ConfigDataSource(ApplicationContext applicationContext, Environment env) {
-        this.applicationContext = applicationContext;
-        this.env = env;
-    }
+    private final Environment env;
 
 
     @Bean
@@ -50,7 +45,7 @@ public class ConfigDataSource {
         return properties;
     }
 
-    @Bean
+    @Bean(name = "entityManagerFactory")
     public LocalSessionFactoryBean entityManagerFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());

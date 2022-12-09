@@ -5,10 +5,18 @@ import com.example.crmprojecthibernategradle.contact.model.Contact;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 
 @Entity
+@Getter
+@Setter
+@ToString
 @Table(name = "Task")
 public class Task {
 
@@ -23,25 +31,22 @@ public class Task {
     private String name;
     @Column(name = "descriptions")
     private String descriptions;
-
-
-    @Column(name = "creation", insertable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDateTime creation;
-
-    @Column(name = "creation", insertable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDateTime update;
     @Column(name = "executor")
     private String executor;
     @ManyToOne
+    @ToString.Exclude
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     private Company company;
     @ManyToOne
+    @ToString.Exclude
     @JoinColumn(name = "contact_id", referencedColumnName = "id")
     private Contact contacts;
-
-
-    public Task() {
-    }
 
     public Task(String name, String descriptions, String executor) {
         this.name = name;
@@ -53,79 +58,6 @@ public class Task {
         this.update = date;
     }
 
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
-    public Contact getContacts() {
-        return contacts;
-    }
-
-    public void setContacts(Contact contacts) {
-        this.contacts = contacts;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescriptions() {
-        return descriptions;
-    }
-
-    public void setDescriptions(String descriptions) {
-        this.descriptions = descriptions;
-    }
-
-    public LocalDateTime getCreation() {
-        return creation;
-    }
-
-    public void setCreation(LocalDateTime creation) {
-        this.creation = creation;
-    }
-
-    public LocalDateTime getUpdate() {
-        return update;
-    }
-
-    public void setUpdate(LocalDateTime update) {
-        this.update = update;
-    }
-
-    public String getExecutor() {
-        return executor;
-    }
-
-    public void setExecutor(String executor) {
-        this.executor = executor;
-    }
-
-    @Override
-    public String toString() {
-        return "Task{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", descriptions='" + descriptions + '\'' +
-                ", creation=" + creation +
-                ", update=" + update +
-                ", executor='" + executor + '\'' +
-                '}';
+    public Task() {
     }
 }

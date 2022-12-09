@@ -54,7 +54,7 @@ public class CompanyService {
         company.setWebsite(updatedCompany.getWebsite());
         company.setINN(updatedCompany.getINN());
 
-        company.setCreation(updatedCompany.setCreation(LocalDateTime.now()));
+        //company.setCreation(updatedCompany.setCreation(LocalDateTime.now()));
         company.setUpdate(updatedCompany.getUpdate());
 
         /**

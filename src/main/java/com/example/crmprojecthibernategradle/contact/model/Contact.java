@@ -1,16 +1,26 @@
 package com.example.crmprojecthibernategradle.contact.model;
+
 import com.example.crmprojecthibernategradle.company.model.Company;
 import com.example.crmprojecthibernategradle.task.model.Task;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.Cascade;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
 @Entity
+@Getter
+@Setter
+@ToString
 @Table(name = "contact")
 public class Contact {
 
@@ -38,16 +48,17 @@ public class Contact {
     @Size(min = 2, message = "length must be between characters")
     @Column(name = "post")
     private String post;
-
-    @Column(name = "creation", insertable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDateTime creation;
-    @Column(name = "creation", insertable = false, updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDateTime update;
-
     @ManyToOne
+    @ToString.Exclude
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     private Company company;
-
+    @ToString.Exclude
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "contacts")
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private List<Task> task;
@@ -72,100 +83,5 @@ public class Contact {
     }
 
     public Contact() {
-
-    }
-
-    public Company getCompany() {
-        return company;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
-    }
-
-    public List<Task> getTask() {
-        return task;
-    }
-
-    public void setTask(List<Task> task) {
-        this.task = task;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getDescriptions() {
-        return descriptions;
-    }
-
-    public void setDescriptions(String descriptions) {
-        this.descriptions = descriptions;
-    }
-
-    public String getPost() {
-        return post;
-    }
-
-    public void setPost(String post) {
-        this.post = post;
-    }
-
-    public LocalDateTime getCreation() {
-        return creation;
-    }
-
-    public void setCreation(LocalDateTime creation) {
-        this.creation = creation;
-    }
-
-    public LocalDateTime getUpdate() {
-        return update;
-    }
-
-    public void setUpdate(LocalDateTime update) {
-        this.update = update;
-    }
-
-    @Override
-    public String toString() {
-        return "Contact{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", descriptions='" + descriptions + '\'' +
-                ", post='" + post + '\'' +
-                ", creation=" + creation +
-                ", update=" + update +
-                '}';
     }
 }

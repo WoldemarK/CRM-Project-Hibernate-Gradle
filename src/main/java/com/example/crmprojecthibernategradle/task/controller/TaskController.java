@@ -1,7 +1,6 @@
 package com.example.crmprojecthibernategradle.task.controller;
 
 import com.example.crmprojecthibernategradle.company.exception.CompanyException;
-import com.example.crmprojecthibernategradle.company.model.Company;
 import com.example.crmprojecthibernategradle.task.model.Task;
 import com.example.crmprojecthibernategradle.task.service.TaskService;
 import jakarta.validation.Valid;
