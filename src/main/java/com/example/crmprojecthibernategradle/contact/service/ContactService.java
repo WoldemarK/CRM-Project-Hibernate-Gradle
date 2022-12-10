@@ -53,9 +53,9 @@ public class ContactService {
         contact.setCreation(updatedContact.getCreation());
         contact.setUpdate(updatedContact.getUpdate());
 
-        /**
-         * company, task
-         */
+        contact.setCompany(updatedContact.getCompany());
+        contact.setTask(updatedContact.getTask());
+
         return Optional.of(contact);
     }
 
@@ -72,6 +72,7 @@ public class ContactService {
         Session session = sessionFactory.getCurrentSession();
         return (Contact) session.createQuery("select c from Contact c where c.name =name", Contact.class);
     }
+
     @Transactional(readOnly = true)
     public List<Contact> findByNames(List<Contact> contacts) {
         Session session = sessionFactory.getCurrentSession();
@@ -87,7 +88,7 @@ public class ContactService {
     @Transactional(readOnly = true)
     public Contact findByPhoneNumber(String phoneNumber) {
         Session session = sessionFactory.getCurrentSession();
-       return session.get(Contact.class, phoneNumber);
+        return session.get(Contact.class, phoneNumber);
     }
 
 

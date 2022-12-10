@@ -1,6 +1,5 @@
 package com.example.crmprojecthibernategradle.task.service;
 
-import com.example.crmprojecthibernategradle.company.model.Company;
 import com.example.crmprojecthibernategradle.task.model.Task;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +18,6 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TaskService {
     private final SessionFactory sessionFactory;
-
 
     @Transactional(readOnly = true)
     public Optional<List<Task>> findAll() {
@@ -49,9 +47,12 @@ public class TaskService {
         task.setCompany(updatedTask.getCompany());
         task.setContacts(updatedTask.getContacts());
 
-        /**
-         * contacts, company
-         */
+        task.setCreation(updatedTask.getCreation());
+        task.setUpdate(updatedTask.getUpdate());
+
+        task.setCompany(updatedTask.getCompany());
+        task.setContacts(updatedTask.getContacts());
+
         return Optional.of(task);
     }
 

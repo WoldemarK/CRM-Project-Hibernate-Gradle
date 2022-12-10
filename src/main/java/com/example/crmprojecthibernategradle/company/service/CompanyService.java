@@ -54,12 +54,12 @@ public class CompanyService {
         company.setWebsite(updatedCompany.getWebsite());
         company.setINN(updatedCompany.getINN());
 
-        //company.setCreation(updatedCompany.setCreation(LocalDateTime.now()));
+        company.setCreation(updatedCompany.getCreation());
         company.setUpdate(updatedCompany.getUpdate());
 
-        /**
-         * contacts, task
-         */
+        company.setContacts(updatedCompany.getContacts());
+        company.setTask(updatedCompany.getTask());
+
         return Optional.of(company);
     }
 
