@@ -2,6 +2,7 @@ package com.example.crmprojecthibernategradle.contact.model;
 
 import com.example.crmprojecthibernategradle.company.model.Company;
 import com.example.crmprojecthibernategradle.task.model.Task;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -55,6 +56,7 @@ public class Contact {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDateTime update;
     @ManyToOne
+    @JsonIgnore
     @ToString.Exclude
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     private Company company;
@@ -69,6 +71,7 @@ public class Contact {
         this.task.add(t);
         t.setContacts(this);
     }
+
 
     public Contact(String name, String email, String descriptions, String post) {
         this.name = name;

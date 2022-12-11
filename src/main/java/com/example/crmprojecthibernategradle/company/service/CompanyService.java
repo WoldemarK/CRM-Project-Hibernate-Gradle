@@ -2,6 +2,7 @@ package com.example.crmprojecthibernategradle.company.service;
 
 
 import com.example.crmprojecthibernategradle.company.model.Company;
+import com.example.crmprojecthibernategradle.contact.model.Contact;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
@@ -36,6 +37,10 @@ public class CompanyService {
 
     @Transactional
     public Optional<Company> save(Company company) {
+
+        for (Contact contact : company.getContacts()){
+            contact.setCompany(company);
+        }
         sessionFactory.getCurrentSession().saveOrUpdate(company);
         return Optional.of(company);
     }

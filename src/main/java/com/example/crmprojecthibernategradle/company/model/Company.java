@@ -11,6 +11,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -22,7 +24,7 @@ import java.util.List;
 @Setter
 @ToString
 @Table(name = "Company")
-public class Company {
+public class Company  {
     @Id
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,10 +48,12 @@ public class Company {
     private String website;
     @Column(name = "inn")
     private Long INN;
-
+    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDateTime creation;
+
+    @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDateTime update;
