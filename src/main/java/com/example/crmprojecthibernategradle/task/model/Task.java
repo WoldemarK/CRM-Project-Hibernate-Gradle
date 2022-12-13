@@ -5,10 +5,9 @@ import com.example.crmprojecthibernategradle.contact.model.Contact;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -16,6 +15,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
+@Builder
 @ToString
 @Table(name = "Task")
 public class Task {
@@ -31,9 +31,12 @@ public class Task {
     private String name;
     @Column(name = "descriptions")
     private String descriptions;
+    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDateTime creation;
+
+    @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDateTime update;

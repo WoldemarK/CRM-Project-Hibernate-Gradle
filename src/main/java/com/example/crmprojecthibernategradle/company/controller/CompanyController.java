@@ -1,7 +1,9 @@
 package com.example.crmprojecthibernategradle.company.controller;
 
 
+import com.example.crmprojecthibernategradle.company.DTO.CompanyDTO;
 import com.example.crmprojecthibernategradle.company.exception.CompanyException;
+import com.example.crmprojecthibernategradle.company.mapper.CompanyMapper;
 import com.example.crmprojecthibernategradle.company.model.Company;
 import com.example.crmprojecthibernategradle.company.service.CompanyService;
 import jakarta.validation.Valid;
@@ -13,13 +15,14 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+
 @Slf4j
 @RestController
 @RequestMapping("/company")
 @RequiredArgsConstructor
 public class CompanyController {
     private final CompanyService service;
-
+    private final CompanyMapper companyMapper;
 
     @GetMapping("/all")
     public ResponseEntity<Optional<List<Company>>> getAll() {
@@ -34,9 +37,12 @@ public class CompanyController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Company>> findById(@Valid @PathVariable(name = "id") Long id) {
-        return ResponseEntity.ok(Optional.ofNullable(service.findById(id)
-                .orElseThrow(() -> new CompanyException("The requested company does not exist" + id))));
+    public ResponseEntity<Optional<CompanyDTO>> findById(@Valid @PathVariable(name = "id") Long id) {
+        Optional<Company> company = service.findById(id);
+        return company
+                .map(c -> ResponseEntity.ok(Optional.ofNullable(companyMapper.convertToCompanyDTO(c))))
+                .orElseThrow(() -> new CompanyException("The requested company does not exist" + id));
+
 
     }
 

@@ -7,11 +7,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
@@ -21,6 +20,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder
 @ToString
 @Table(name = "contact")
 public class Contact {
@@ -49,9 +49,13 @@ public class Contact {
     @Size(min = 2, message = "length must be between characters")
     @Column(name = "post")
     private String post;
+
+    @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDateTime creation;
+
+    @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private LocalDateTime update;
