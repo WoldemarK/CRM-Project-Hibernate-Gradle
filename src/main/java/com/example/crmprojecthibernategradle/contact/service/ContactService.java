@@ -33,6 +33,10 @@ public class ContactService {
 
     @Transactional()
     public Optional<Contact> save(Contact contact) {
+      Company company = contact.getCompany();
+        List<Contact> contacts = company.getContacts();
+        contacts.add(contact);
+        company.setContacts(contacts);
         sessionFactory.getCurrentSession().saveOrUpdate(contact);
         return Optional.of(contact);
     }

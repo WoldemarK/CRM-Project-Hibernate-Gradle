@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @Setter
-@Builder
 @ToString
 @Table(name = "Task")
 public class Task {

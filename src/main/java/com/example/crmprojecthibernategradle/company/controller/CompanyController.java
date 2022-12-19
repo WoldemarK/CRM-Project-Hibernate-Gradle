@@ -1,6 +1,5 @@
 package com.example.crmprojecthibernategradle.company.controller;
 
-
 import com.example.crmprojecthibernategradle.company.DTO.CompanyDTO;
 import com.example.crmprojecthibernategradle.company.exception.CompanyException;
 import com.example.crmprojecthibernategradle.company.mapper.CompanyMapper;
@@ -30,8 +29,14 @@ public class CompanyController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Company> save(@RequestBody Company company) {
-        return ResponseEntity.ok(service.save(company)
+    public ResponseEntity<Company> saveCompanyAndContact(@RequestBody Company company) {
+        return ResponseEntity.ok(service.saveCompanyAndContact(company)
+                .orElseThrow(() ->
+                        new CompanyException("An error occurred while saving, check the spelling of the input")));
+    }
+    @PostMapping("/saveCompany")
+    public ResponseEntity<Company> saveCompany(@RequestBody Company company) {
+        return ResponseEntity.ok(service.saveCompany(company)
                 .orElseThrow(() ->
                         new CompanyException("An error occurred while saving, check the spelling of the input")));
     }

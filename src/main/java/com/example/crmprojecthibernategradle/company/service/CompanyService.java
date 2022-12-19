@@ -10,7 +10,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,7 +23,8 @@ public class CompanyService {
     @Transactional(readOnly = true)
     public Optional<List<Company>> findAll() {
         Session session = sessionFactory.getCurrentSession();
-        return Optional.ofNullable(session.createQuery("select c from Company c", Company.class).getResultList());
+        return Optional
+                .ofNullable(session.createQuery("select c from Company c", Company.class).getResultList());
     }
 
 
@@ -36,11 +36,15 @@ public class CompanyService {
 
 
     @Transactional
-    public Optional<Company> save(Company company) {
-
+    public Optional<Company> saveCompanyAndContact(Company company) {
         for (Contact contact : company.getContacts()){
             contact.setCompany(company);
         }
+        sessionFactory.getCurrentSession().saveOrUpdate(company);
+        return Optional.of(company);
+    }
+    @Transactional
+    public Optional<Company> saveCompany(Company company){
         sessionFactory.getCurrentSession().saveOrUpdate(company);
         return Optional.of(company);
     }
@@ -118,8 +122,6 @@ public class CompanyService {
                 .ofNullable(session.createQuery("select c from Company c where c.name like 'T'", Company.class)
                         .getResultList());
     }
-    /**
-     * search by task in company
-     * search for a person responsible for tasks
-     */
+
+
 }

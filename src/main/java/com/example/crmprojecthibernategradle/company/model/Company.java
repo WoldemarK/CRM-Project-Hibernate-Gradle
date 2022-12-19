@@ -23,7 +23,6 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Builder
 @ToString
 @Table(name = "Company")
 public class Company  {

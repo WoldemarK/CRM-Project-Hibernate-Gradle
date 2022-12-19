@@ -20,7 +20,6 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-@Builder
 @ToString
 @Table(name = "contact")
 public class Contact {
