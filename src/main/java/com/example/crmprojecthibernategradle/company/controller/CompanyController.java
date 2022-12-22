@@ -5,6 +5,8 @@ import com.example.crmprojecthibernategradle.company.exception.CompanyException;
 import com.example.crmprojecthibernategradle.company.mapper.CompanyMapper;
 import com.example.crmprojecthibernategradle.company.model.Company;
 import com.example.crmprojecthibernategradle.company.service.CompanyService;
+
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +25,9 @@ public class CompanyController {
     private final CompanyService service;
     private final CompanyMapper companyMapper;
 
+
     @GetMapping("/all")
+    @Operation(description = "View all companies")
     public ResponseEntity<Optional<List<Company>>> getAll() {
         return ResponseEntity.ok(service.findAll());
     }
