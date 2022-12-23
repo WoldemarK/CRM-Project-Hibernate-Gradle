@@ -6,7 +6,7 @@ import com.example.crmprojecthibernategradle.company.mapper.CompanyMapper;
 import com.example.crmprojecthibernategradle.company.model.Company;
 import com.example.crmprojecthibernategradle.company.service.CompanyService;
 
-import io.swagger.v3.oas.annotations.Operation;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ public class CompanyController {
 
 
     @GetMapping("/all")
-    @Operation(description = "View all companies")
+    //  @Operation(description = "View all companies")
     public ResponseEntity<Optional<List<Company>>> getAll() {
         return ResponseEntity.ok(service.findAll());
     }
