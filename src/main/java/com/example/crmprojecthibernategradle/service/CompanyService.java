@@ -29,7 +29,7 @@ public class CompanyService {
 
 
     @Transactional(readOnly = true)
-    public Optional<Company> findById(Long id) {
+    public Company findById(Long id) {
         Session session = sessionFactory.getCurrentSession();
         return Optional.ofNullable(session.get(Company.class, id));
     }

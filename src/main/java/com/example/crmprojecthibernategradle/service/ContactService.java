@@ -25,7 +25,7 @@ public class ContactService {
 
 
     @Transactional(readOnly = true)
-    public Optional<Contact> findById(Long id) {
+    public Contact findById(Long id) {
         Session session = sessionFactory.getCurrentSession();
         return Optional.ofNullable(session.get(Contact.class, id));
     }
