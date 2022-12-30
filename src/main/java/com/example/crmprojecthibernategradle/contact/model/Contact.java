@@ -64,7 +64,7 @@ public class Contact {
     @JoinColumn(name = "company_id", referencedColumnName = "id")
     private Company company;
     @ToString.Exclude
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "contacts")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "contact")
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private List<Task> task;
 
@@ -72,7 +72,7 @@ public class Contact {
         if (task == null)
             this.task = new ArrayList<>();
         this.task.add(t);
-        t.setContacts(this);
+        t.setContact(this);
     }
 
 

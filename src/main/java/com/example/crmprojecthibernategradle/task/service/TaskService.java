@@ -45,13 +45,13 @@ public class TaskService {
         task.setName(updatedTask.getName());
         task.setExecutor(updatedTask.getExecutor());
         task.setCompany(updatedTask.getCompany());
-        task.setContacts(updatedTask.getContacts());
+        task.setContact(updatedTask.getContact());
 
         task.setCreation(updatedTask.getCreation());
         task.setUpdate(updatedTask.getUpdate());
 
         task.setCompany(updatedTask.getCompany());
-        task.setContacts(updatedTask.getContacts());
+        task.setContact(updatedTask.getContact());
 
         return Optional.of(task);
     }

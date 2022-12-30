@@ -27,7 +27,6 @@ public class CompanyController {
 
 
     @GetMapping("/all")
-    //  @Operation(description = "View all companies")
     public ResponseEntity<Optional<List<Company>>> getAll() {
         return ResponseEntity.ok(service.findAll());
     }
@@ -38,6 +37,7 @@ public class CompanyController {
                 .orElseThrow(() ->
                         new CompanyException("An error occurred while saving, check the spelling of the input")));
     }
+
     @PostMapping("/saveCompany")
     public ResponseEntity<Company> saveCompany(@RequestBody Company company) {
         return ResponseEntity.ok(service.saveCompany(company)
@@ -57,7 +57,7 @@ public class CompanyController {
 
     @PutMapping("/{id}/company")
     public ResponseEntity<Optional<Company>> update(@Valid @PathVariable(name = "id") Long id,
-                                                    @RequestParam(name = "company") Company company) {
+                                                    @RequestBody Company company) {
         return ResponseEntity.ok(Optional.ofNullable(service.update(id, company)
                 .orElseThrow(() -> new CompanyException("Failed to save company"))));
     }

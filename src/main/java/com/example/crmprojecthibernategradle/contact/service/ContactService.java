@@ -33,7 +33,7 @@ public class ContactService {
 
     @Transactional()
     public Optional<Contact> save(Contact contact) {
-      Company company = contact.getCompany();
+        Company company = contact.getCompany();
         List<Contact> contacts = company.getContacts();
         contacts.add(contact);
         company.setContacts(contacts);
@@ -42,26 +42,27 @@ public class ContactService {
     }
 
 
-    @Transactional(readOnly = true)
-    public Optional<Contact> update(Long id, Contact updatedContact) {
-        Session session = sessionFactory.getCurrentSession();
-
-        Contact contact = session.get(Contact.class, id);
-        contact.setId(updatedContact.getId());
-        contact.setName(updatedContact.getName());
-        contact.setEmail(updatedContact.getEmail());
-        contact.setPhoneNumber(updatedContact.getPhoneNumber());
-        contact.setDescriptions(updatedContact.getDescriptions());
-        contact.setPost(updatedContact.getPost());
-
-        contact.setCreation(updatedContact.getCreation());
-        contact.setUpdate(updatedContact.getUpdate());
-
-        contact.setCompany(updatedContact.getCompany());
-        contact.setTask(updatedContact.getTask());
-
-        return Optional.of(contact);
-    }
+//    @Transactional()
+//    public Optional<Contact> update(Long id, Contact updatedContact) {
+//        Session session = sessionFactory.getCurrentSession();
+//
+//        updatedContact = session.get(Contact.class, id);
+//        contact.setId(updatedContact.getId());
+//        contact.setName(updatedContact.getName());
+//        contact.setEmail(updatedContact.getEmail());
+//        contact.setPhoneNumber(updatedContact.getPhoneNumber());
+//        contact.setDescriptions(updatedContact.getDescriptions());
+//        contact.setPost(updatedContact.getPost());
+//
+//        contact.setCreation(updatedContact.getCreation());
+//        contact.setUpdate(updatedContact.getUpdate());
+//
+//        contact.setCompany(updatedContact.getCompany());
+//        contact.setTask(updatedContact.getTask());
+//       session.saveOrUpdate(updatedContact);
+//
+//        return Optional.of(contact);
+//    }
 
 
     @Transactional(readOnly = true)

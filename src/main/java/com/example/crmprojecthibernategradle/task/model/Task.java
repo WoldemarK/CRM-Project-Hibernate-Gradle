@@ -48,7 +48,7 @@ public class Task {
     @ManyToOne
     @ToString.Exclude
     @JoinColumn(name = "contact_id", referencedColumnName = "id")
-    private Contact contacts;
+    private Contact contact;
 
     public Task(String name, String descriptions, String executor) {
         this.name = name;

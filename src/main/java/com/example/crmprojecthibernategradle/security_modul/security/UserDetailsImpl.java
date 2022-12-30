@@ -3,11 +3,12 @@ package com.example.crmprojecthibernategradle.security_modul.security;
 import com.example.crmprojecthibernategradle.security_modul.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
 @RequiredArgsConstructor
-public class UserDetails implements org.springframework.security.core.userdetails.UserDetails {
+public class UserDetailsImpl implements UserDetails {
 
     private final User user;
 

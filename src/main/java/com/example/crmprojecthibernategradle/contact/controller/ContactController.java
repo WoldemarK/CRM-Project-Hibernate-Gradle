@@ -1,6 +1,5 @@
 package com.example.crmprojecthibernategradle.contact.controller;
 
-import com.example.crmprojecthibernategradle.company.exception.CompanyException;
 import com.example.crmprojecthibernategradle.contact.exception.ContactException;
 import com.example.crmprojecthibernategradle.contact.model.Contact;
 import com.example.crmprojecthibernategradle.contact.service.ContactService;
@@ -36,12 +35,12 @@ public class ContactController {
                 .orElseThrow(() -> new ContactException("The requested contact does not exist" + id))));
     }
 
-    @PutMapping("/{id}/contact")
-    public ResponseEntity<Optional<Contact>> update(@Valid @PathVariable(name = "id") Long id,
-                                                    @RequestParam(name = "contact") Contact contact) {
-        return ResponseEntity.ok(Optional.ofNullable(service.update(id, contact)
-                .orElseThrow(() -> new CompanyException("Failed to save contact"))));
-    }
+//    @PutMapping("/{id}/contact")
+//    public ResponseEntity<Optional<Contact>> update(@Valid @PathVariable(name = "id") Long id,
+//                                                    @RequestBody Contact contact) {
+//        return ResponseEntity.ok(Optional.ofNullable(service.update(id, contact)
+//                .orElseThrow(() -> new CompanyException("Failed to save contact"))));
+//    }
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable(name = "id") Long id) {
         service.delete(id);
