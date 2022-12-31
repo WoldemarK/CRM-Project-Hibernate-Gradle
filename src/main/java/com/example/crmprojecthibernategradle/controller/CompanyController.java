@@ -1,12 +1,9 @@
 package com.example.crmprojecthibernategradle.controller;
 
-import com.example.crmprojecthibernategradle.dto.CompanyDTO;
 import com.example.crmprojecthibernategradle.exception.CompanyException;
 import com.example.crmprojecthibernategradle.mapper.CompanyMapper;
 import com.example.crmprojecthibernategradle.model.Company;
 import com.example.crmprojecthibernategradle.service.CompanyService;
-
-
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -45,15 +42,15 @@ public class CompanyController {
                         new CompanyException("An error occurred while saving, check the spelling of the input")));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Optional<CompanyDTO>> findById(@Valid @PathVariable(name = "id") Long id) {
-        Optional<Company> company = service.findById(id);
-        return company
-                .map(c -> ResponseEntity.ok(Optional.ofNullable(companyMapper.convertToCompanyDTO(c))))
-                .orElseThrow(() -> new CompanyException("The requested company does not exist" + id));
-
-
-    }
+//    @GetMapping("/{id}")
+//    public ResponseEntity<Optional<CompanyDTO>> findById(@Valid @PathVariable(name = "id") Long id) {
+//        Optional<Company> company = Optional.ofNullable(service.findById(id));
+//        return company
+//                .map(c -> ResponseEntity.ok(Optional.ofNullable(companyMapper.convertToCompanyDTO(c))))
+//                .orElseThrow(() -> new CompanyException("The requested company does not exist" + id));
+//
+//
+//    }
 
     @PutMapping("/{id}/company")
     public ResponseEntity<Optional<Company>> update(@Valid @PathVariable(name = "id") Long id,

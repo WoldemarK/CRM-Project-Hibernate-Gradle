@@ -13,21 +13,22 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class ContactService {
     private final SessionFactory sessionFactory;
 
 
-    @Transactional(readOnly = true)
+
     public Optional<List<Contact>> findAll() {
         Session session = sessionFactory.getCurrentSession();
         return Optional.of(session.createQuery("select c from Contact  c", Contact.class).getResultList());
     }
 
 
-    @Transactional(readOnly = true)
+
     public Contact findById(Long id) {
         Session session = sessionFactory.getCurrentSession();
-        return Optional.ofNullable(session.get(Contact.class, id));
+        return session.get(Contact.class, id);
     }
 
 
@@ -65,20 +66,20 @@ public class ContactService {
 //    }
 
 
-    @Transactional(readOnly = true)
+    @Transactional
     public void delete(Long id) {
         Session session = sessionFactory.getCurrentSession();
         session.remove(session.get(Contact.class, id));
 
     }
 
-    @Transactional(readOnly = true)
+
     public Contact findByName(String name) {
         Session session = sessionFactory.getCurrentSession();
         return (Contact) session.createQuery("select c from Contact c where c.name =name", Contact.class);
     }
 
-    @Transactional(readOnly = true)
+
     public List<Contact> findByNames(List<Contact> contacts) {
         Session session = sessionFactory.getCurrentSession();
         List<String> searchByName = contacts
@@ -90,14 +91,14 @@ public class ContactService {
     }
 
 
-    @Transactional(readOnly = true)
+
     public Contact findByPhoneNumber(String phoneNumber) {
         Session session = sessionFactory.getCurrentSession();
         return session.get(Contact.class, phoneNumber);
     }
 
 
-    @Transactional(readOnly = true)
+
     public Optional<List<Contact>> findByNameFirst(String name) {
         Session session = sessionFactory.getCurrentSession();
         return Optional
@@ -107,7 +108,7 @@ public class ContactService {
     }
 
 
-    @Transactional(readOnly = true)
+
     public List<Contact> findByNameCompany(List<Company> company) {
         Session session = sessionFactory.getCurrentSession();
         List<Long> ids = company.stream().map(Company::getId).toList();

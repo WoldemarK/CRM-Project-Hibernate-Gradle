@@ -3,6 +3,7 @@ package com.example.crmprojecthibernategradle.service;
 
 import com.example.crmprojecthibernategradle.model.Company;
 import com.example.crmprojecthibernategradle.model.Contact;
+import com.example.crmprojecthibernategradle.repository.CompanyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.Session;
@@ -20,6 +21,8 @@ import java.util.Optional;
 public class CompanyService {
     private final SessionFactory sessionFactory;
 
+    private final CompanyRepository repository;
+
     @Transactional(readOnly = true)
     public Optional<List<Company>> findAll() {
         Session session = sessionFactory.getCurrentSession();
@@ -31,7 +34,7 @@ public class CompanyService {
     @Transactional(readOnly = true)
     public Company findById(Long id) {
         Session session = sessionFactory.getCurrentSession();
-        return Optional.ofNullable(session.get(Company.class, id));
+        return session.get(Company.class, id);
     }
 
 

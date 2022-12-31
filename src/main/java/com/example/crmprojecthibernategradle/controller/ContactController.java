@@ -29,11 +29,11 @@ public class ContactController {
                 .orElseThrow(() -> new ContactException("An error occurred while saving, check the spelling of the input")));
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Optional<Contact>> getId(@Valid @PathVariable(name = "id") Long id) {
-        return ResponseEntity.ok(Optional.ofNullable(service.findById(id)
-                .orElseThrow(() -> new ContactException("The requested contact does not exist" + id))));
-    }
+//    @GetMapping("/{id}")
+//    public ResponseEntity<Optional<Contact>> getId(@Valid @PathVariable(name = "id") Long id) {
+//        return ResponseEntity.ok(Optional.ofNullable(service.findById(id)
+//                .orElseThrow(() -> new ContactException("The requested contact does not exist" + id))));
+//    }
 
 //    @PutMapping("/{id}/contact")
 //    public ResponseEntity<Optional<Contact>> update(@Valid @PathVariable(name = "id") Long id,

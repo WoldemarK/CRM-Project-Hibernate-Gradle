@@ -6,7 +6,6 @@ import com.example.crmprojecthibernategradle.mapper.TaskMapper;
 import com.example.crmprojecthibernategradle.model.Task;
 import com.example.crmprojecthibernategradle.repository.TaskRepository;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +16,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class TaskService {
-    private final SessionFactory sessionFactory;
+
+    //private final SessionFactory sessionFactory;
     private final TaskRepository repository;
     private final TaskMapper taskMapper;
     private final CompanyService companyService;
@@ -33,34 +33,17 @@ public class TaskService {
                 new TaskException(String.format("This ID %d does not exist ", id)));
     }
 
-    @Transactional
-    public TaskDTO saveDto(Task task) {
-        task = repository.save(task);
-        return taskMapper.convertToTaskDTO(task);
-    }
 
-    /**
-     * уточнить
-     *
-     * @param taskDTO
-     * @return
-     */
     @Transactional
-    public TaskDTO add(TaskDTO taskDTO) {
+    public TaskDTO creationAndPreservation(TaskDTO taskDTO) {
         Task task = taskMapper.convertToTask(taskDTO);
         task.setCompany(companyService.findById(taskDTO.getCompanyId()));
         task.setContact(contactService.findById(taskDTO.getContactId()));
-        return saveEntityAndReturnDto(task);
+        return convertToTaskDTO(task);
     }
 
-    /**
-     * уточнить
-     *
-     * @param task
-     * @return
-     */
     @Transactional
-    public TaskDTO saveEntityAndReturnDto(Task task) {
+    public TaskDTO convertToTaskDTO(Task task) {
         task = repository.save(task);
         return taskMapper.convertToTaskDTO(task);
     }
@@ -84,11 +67,12 @@ public class TaskService {
                 new TaskException("Requested names not found")));
     }
 
+    @Transactional
     public TaskDTO update(TaskDTO taskDTO) {
         return repository.findById(taskDTO.getId())
                 .map(task -> {
                     taskMapper.updateFromDto(taskDTO, task);
-                    return saveEntityAndReturnDto(task);
+                    return convertToTaskDTO(task);
                 })
                 .orElseThrow(() ->
                         new TaskException(String.format("Task with id %d does not exist.", taskDTO.getId())));

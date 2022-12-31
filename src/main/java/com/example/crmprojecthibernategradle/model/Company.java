@@ -14,7 +14,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -64,19 +63,6 @@ public class Company  {
     @Cascade(org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private List<Task> task;
 
-    public void addContact(Contact c) {
-        if (contacts == null)
-            this.contacts = new ArrayList<>();
-        this.contacts.add(c);
-        c.setCompany(this);
-    }
-
-    public void addTask(Task t) {
-        if (task == null)
-            this.task = new ArrayList<>();
-        this.task.add(t);
-        t.setCompany(this);
-    }
 
     public Company(Long id, String name, String email,
                    String phoneNumber, String descriptions,
